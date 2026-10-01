@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="할 일과 날짜를 등록하고, 완료한 일정을 체크하는 나의 플래너">
+  <title>DAYNOTE | 나의 플래너</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23102329'/%3E%3Cpath d='M9 17l5 5L24 11' fill='none' stroke='%23b9f3dd' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="planner">
+    <header class="page-header">
+      <div class="brand"><span class="brand-mark" aria-hidden="true">✓</span> DAYNOTE</div>
+      <div class="page-heading">
+        <h1>나의 플래너<span>.</span></h1>
+        <p class="remaining" role="status">남은 일정 <strong id="remaining-count">0</strong>개</p>
+      </div>
+    </header>
+
+    <main class="planner-grid">
+      <!-- 왼쪽: 일정 입력 -->
+      <section class="glass input-panel" aria-labelledby="input-heading">
+        <p class="section-label">NEW TASK</p>
+        <h2 id="input-heading">새로운 일정</h2>
+        <form id="task-form">
+          <label for="task-title">할 일</label>
+          <input id="task-title" type="text" placeholder="어떤 일을 계획하고 있나요?" maxlength="100" required>
+
+          <label for="task-date">날짜</label>
+          <div class="date-choice">
+            <input id="task-date" type="date" aria-describedby="date-status" required>
+            <button id="date-confirm" class="date-confirm" type="button">확인</button>
+          </div>
+          <p id="date-status" class="date-status" role="status" hidden></p>
+
+          <label for="task-category">카테고리</label>
+          <select id="task-category">
+            <option value="학교">학교</option>
+            <option value="개인">개인</option>
+            <option value="운동">운동</option>
+          </select>
+
+          <button class="add-button" type="submit"><span aria-hidden="true">＋</span> 추가</button>
+        </form>
+        <p id="storage-message" class="panel-note" role="status">일정은 이 브라우저에 자동으로 저장됩니다.</p>
+      </section>
+
+      <!-- 오른쪽: 등록한 일정 -->
+      <section class="glass list-panel" aria-labelledby="list-heading">
+        <div class="list-heading">
+          <div>
+            <p class="section-label">MY TASKS</p>
+            <h2 id="list-heading">일정 목록</h2>
+          </div>
+          <span class="list-count">전체 <span id="total-count">0</span>개</span>
+        </div>
+        <p class="list-help">완료한 일정은 체크하고, 중요한 일정은 별을 눌러 주세요.</p>
+        <ul id="task-list" class="task-list"></ul>
+        <div id="empty-message" class="empty-state">
+          <span class="empty-mark" aria-hidden="true">＋</span>
+          <h3>아직 등록한 일정이 없어요</h3>
+          <p>할 일과 날짜를 입력하고<br>첫 번째 일정을 추가해 보세요.</p>
+        </div>
+      </section>
+    </main>
+    <footer class="page-footer">DAYNOTE <span>나의 하루, 나의 계획</span></footer>
+  </div>
+
+  <!-- JavaScript는 이 카드 틀을 복사하고 내용만 채웁니다. -->
+  <template id="task-template">
+    <li class="task-card">
+      <input class="task-check" type="checkbox">
+      <div class="task-content">
+        <h3 class="task-title"></h3>
+        <div class="task-details">
+          <span class="category-tag"></span>
+          <time class="task-date"></time>
+          <span class="important-label" hidden>중요</span>
+          <span class="done-label" hidden>완료</span>
+        </div>
+      </div>
+      <div class="task-actions">
+        <button class="star-button" type="button" aria-pressed="false">☆</button>
+        <button class="delete-button" type="button">삭제</button>
+      </div>
+    </li>
+  </template>
+</body>
+</html>
